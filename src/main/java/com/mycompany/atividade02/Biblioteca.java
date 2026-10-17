@@ -8,24 +8,25 @@ public class Biblioteca {
     
     // --- LEITORES ---
     public boolean cadastrarLeitor(Leitor leitor){ 
-        if(leitor == null || consultarLeitor(leitor.getCodigo()) != null){ //Objeto nulo ou leitor já existente
-            System.out.println("Não foi possível cadastrar o leitor.");
-            return false;
-        }else{
-            leitores.add(leitor);
-            System.out.println("Leitor cadastrado.");
-            return true;
+        for(Leitor l: leitores){
+            if(l.getCodigo() == leitor.getCodigo()){ 
+                System.out.println("Não foi possível cadastrar o leitor.");
+                return false; 
+            }
         }
+        leitores.add(leitor);
+        System.out.println("Leitor cadastrado.");
+        return true;     
     }
     
     public Leitor consultarLeitor(int codigo){
         for(Leitor l : leitores){
-            if(l.getCodigo() == codigo){
+            if(l != null && l.getCodigo() == codigo){
                 System.out.println(l.toString());
-            }else{
-                System.out.println("Registro não encontrado");
+                return l;
             }
         }
+        System.out.println("Leitor não encontrado");
         return null;
     }
     
@@ -39,13 +40,29 @@ public class Biblioteca {
         }  
     }
     
+    public void atualizarLeitor(int codigo, String nome, String email){
+        for (Leitor l : leitores){
+            if(l != null){
+                if(l.atualizarDados(nome, email)){
+                    System.out.println("Dados do leitor atualizados");
+                }else{
+                    System.out.println("Não foi possível atualizar os dados.");
+                }    
+            }else{
+                System.out.println("Leitor não encontrado.");
+            }    
+        }
+    }
+    
     public boolean removerLeitor(Leitor leitor) {
         if (leitor == null) {
+            System.out.println("Leitor não encontrado.");
             return false;
         }else{
             for (Emprestimo e : emprestimos) {
                 if (e.isAberto() && e.getLeitor().equals(leitor)) {
                     System.out.println("Leitor não removido. Há empréstimo aberto.");
+                    System.out.println(e.toString());
                     return false;
                 }
             }
@@ -58,22 +75,26 @@ public class Biblioteca {
     
     // --- LIVROS ---
     public boolean cadastrarLivro(Livro livro) {
-        if (livro == null || consultarLivro(livro.getCodigo()) != null) {
-            System.out.println("Não foi possível cadastrar o livro.");
-            return false;
-        }else{
-            livros.add(livro);
-            System.out.println("Livro cadastrado.");
-            return true;
+        for(Livro l: livros){
+            if(l.getCodigo() == livro.getCodigo()){
+                System.out.println("Não foi possível cadastrar o livro.");
+                return false;
+            } 
         }
+        livros.add(livro);
+        System.out.println("Livro cadastrado.");
+        return true;    
     }
 
-    public Livro consultarLivro(int codigo) {
-        for (Livro l : livros) {
-            if (l.getCodigo() == codigo) {
-                return l;
+        
+    public Livro consultarLivro(int codigo){
+        for (Livro livro : livros) {
+            if (livro.getCodigo() == codigo) {
+                System.out.println(livro.toString());
+                return livro;
             }
         }
+        System.out.println("Livro não encontrado");
         return null;
     }
 
@@ -85,21 +106,36 @@ public class Biblioteca {
             System.out.println(l);
         }
     }
-
+    
+    public void atualizarLivro(int codigo, String titulo, String autor){
+        for (Livro l : livros){
+            if(l != null){
+                if(l.atualizarDados(titulo, autor)){
+                    System.out.println("Dados do livro atualizados");
+                }else{
+                    System.out.println("Não foi possível atualizar os dados.");
+                }    
+            }else{
+                System.out.println("Livro não encontrado.");
+            }    
+        }
+    }
+    
     public boolean removerLivro(Livro livro) {
         if (livro == null) {
+            System.out.println("Livro não encontrado");
             return false;
-        }
-
-        for (Emprestimo e : emprestimos) {
-            if (e.isAberto() && e.contemLivro(livro)) {
-                System.out.println("Livro não removido. Vinculado a empréstimo aberto.");
-                return false;
+        }else{
+            for (Emprestimo e : emprestimos) {
+                if (e.isAberto() && e.contemLivro(livro)) {
+                    System.out.println("Livro não removido. Vinculado a empréstimo aberto.");
+                    return false;
+                }
             }
-        }
-        livros.remove(livro);
-        System.out.println("Livro removido.");
-        return true;
+            livros.remove(livro);
+            System.out.println("Livro removido.");
+            return true;
+        }   
     }
 
     // --- EMPRÉSTIMOS ---
@@ -122,7 +158,7 @@ public class Biblioteca {
 
         for (Livro livro : livrosEscolhidos) {
             if (novoEmprestimo.adicionarLivro(livro)) {
-                livro.emprestar(); // RN10
+                livro.emprestar();
                 adicionados++;
             }
         }
@@ -134,6 +170,7 @@ public class Biblioteca {
 
         emprestimos.add(novoEmprestimo);
         System.out.println("Empréstimo registrado.");
+        System.out.println(novoEmprestimo.toString());
         return true;
     }
 

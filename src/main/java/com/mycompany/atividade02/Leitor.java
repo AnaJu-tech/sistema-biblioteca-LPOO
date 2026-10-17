@@ -6,9 +6,11 @@ public class Leitor {
     private String email;
     
     public Leitor(int codigo, String nome, String email){ 
-        this.codigo = codigo;
-        this.nome = nome;
-        this.email = email;
+        if (codigo > 0 && !nome.isBlank() && !nome.isEmpty() && !email.isBlank() && !email.isEmpty()){
+            this.codigo = codigo;
+            this.nome = nome;
+            this.email = email;
+        }
     }
     
     public int getCodigo() {
@@ -23,13 +25,13 @@ public class Leitor {
         return email;
     }
     
-    public void atualizarDados(String nome, String email){ 
-        if(nome != null && !nome.isBlank()){
+    public boolean atualizarDados(String nome, String email){ 
+        if(nome != null && !nome.isBlank() && email != null && !email.isBlank()){
             this.nome = nome;
-        }
-        if(email != null && !email.isBlank()){
             this.email = email;
-        }    
+            return true;
+        }
+        return false;    
     }
 
     public String toString(){

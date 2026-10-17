@@ -19,5 +19,6 @@ public class ItemEmprestimo {
         
     public void registrarDevolucao(){
         this.devolvido = true;
+        this.livro.devolver();
     }
 }

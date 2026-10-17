@@ -7,10 +7,12 @@ public class Livro {
     private boolean disponivel;
 
     public Livro(int codigo, String titulo, String autor) {
-        this.codigo = codigo;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.disponivel = true; //Livro sempre nasce disponível
+        if (codigo > 0 && !titulo.isBlank() && !titulo.isEmpty() && !autor.isBlank() && !autor.isEmpty()){
+            this.codigo = codigo;
+            this.titulo = titulo;
+            this.autor = autor;
+            this.disponivel = true; //Livro sempre nasce disponível
+        }
     }
 
     public int getCodigo() {
@@ -29,13 +31,13 @@ public class Livro {
         return disponivel;
     }
 
-    public void atualizarDados(String titulo, String autor){ 
-        if(titulo != null && !titulo.isBlank()){
+    public boolean atualizarDados(String titulo, String autor){ 
+        if(titulo != null && !titulo.isBlank() && autor != null && !autor.isBlank()){
             this.titulo = titulo;
-        }
-        if(autor != null && !autor.isBlank()){
             this.autor = autor;
-        }    
+            return true;
+        }
+        return false;    
     }
 
     public void emprestar(){ 

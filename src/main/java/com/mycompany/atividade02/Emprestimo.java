@@ -34,6 +34,9 @@ public class Emprestimo {
     }
     
     public boolean contemLivro(Livro livro) {
+        if (livro == null){
+            return false;
+        }
         for (ItemEmprestimo item : itens) {
             if (item.getLivro().equals(livro)) {
                 return true;
@@ -43,24 +46,37 @@ public class Emprestimo {
     }
 
     public boolean adicionarLivro(Livro livro) {
-        if (livro == null || !livro.isDisponivel()) {
-            return false;
+        if(livro != null && livro.isDisponivel()){
+            if (contemLivro(livro)) {
+                return false;
+            }
+            livro.emprestar();
+            ItemEmprestimo item = new ItemEmprestimo(livro);
+            itens.add(item);
+            return true;
         }
-        if (contemLivro(livro)) {
-            return false;
-        }
-
-        ItemEmprestimo item = new ItemEmprestimo(livro);
-        itens.add(item);
-        return true;
+        return false;
     }
 
     public void finalizar() {
-        this.aberto = false;
         for (ItemEmprestimo item : itens) {
-            item.registrarDevolucao();
-            item.getLivro().devolver();
+            if(!item.isDevolvido()){
+                item.registrarDevolucao();    
+            }    
         }
+        this.aberto = false;
     }
 
+    public String toString(){
+        String livros = "";
+
+        for (int i = 0; i < itens.size(); i++){
+            livros += itens.get(i).getLivro().getTitulo();
+            if(i < itens.size() - 1){
+                livros += ", ";
+            }
+        }
+        return this.leitor + " - " + this.dataEmprestimo + " - " + 
+                this.aberto + " - " + livros;
+    }
 }
