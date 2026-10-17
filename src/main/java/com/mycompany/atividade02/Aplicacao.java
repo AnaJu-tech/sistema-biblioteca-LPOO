@@ -36,7 +36,8 @@ public class Aplicacao {
                 continue;
             }
             
-            opcao = Integer.parseInt(scanner.nextLine());
+            opcao = scanner.nextInt();
+            scanner.nextLine();
             
             switch (opcao) {
                     
@@ -70,13 +71,21 @@ public class Aplicacao {
                     scanner.nextLine();
 
                     Leitor leitorAtu = biblioteca.consultarLeitor(codAtuLeitor);
-
-                    System.out.print("Novo nome: ");
-                    String novoNome = scanner.nextLine();
-                    System.out.print("Novo e-mail: ");
-                    String novoEmail = scanner.nextLine();
-
-                    biblioteca.atualizarLeitor(codAtuLeitor, novoNome, novoEmail);
+                    
+                    if(leitorAtu != null){
+                        System.out.print("Novo nome: ");
+                        String novoNome = scanner.nextLine();
+                        System.out.print("Novo e-mail: ");
+                        String novoEmail = scanner.nextLine();
+                        
+                        if(leitorAtu.atualizarDados(novoNome, novoEmail)){
+                            System.out.println("Dados do leitor atualizados");
+                        }else{
+                            System.out.println("Não foi possível atualizar os dados.");
+                        }
+                    }else{
+                        System.out.println("Leitor não encotrado.");
+                    }
                     break;
 
                 case 5: // Remover leitor
@@ -118,12 +127,20 @@ public class Aplicacao {
 
                     Livro livroAtu = biblioteca.consultarLivro(codAtuLivro);
 
-                    System.out.print("Novo título: ");
-                    String novoTitulo = scanner.nextLine();
-                    System.out.print("Novo autor: ");
-                    String novoAutor = scanner.nextLine();
-
-                    biblioteca.atualizarLivro(codAtuLivro, novoTitulo, novoAutor);
+                    if(livroAtu != null){
+                        System.out.print("Novo titulo: ");
+                        String novoTitulo = scanner.nextLine();
+                        System.out.print("Novo autor: ");
+                        String novoAutor = scanner.nextLine();
+                        
+                        if(livroAtu.atualizarDados(novoTitulo, novoAutor)){
+                            System.out.println("Dados do livro atualizados");
+                        }else{
+                            System.out.println("Não foi possível atualizar os dados.");
+                        }
+                    }else{
+                        System.out.println("Livro não encotrado.");
+                    }
                     break;
 
                 case 10: // Remover livro

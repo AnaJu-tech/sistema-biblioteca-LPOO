@@ -40,20 +40,6 @@ public class Biblioteca {
         }  
     }
     
-    public void atualizarLeitor(int codigo, String nome, String email){
-        for (Leitor l : leitores){
-            if(l != null){
-                if(l.atualizarDados(nome, email)){
-                    System.out.println("Dados do leitor atualizados");
-                }else{
-                    System.out.println("Não foi possível atualizar os dados.");
-                }    
-            }else{
-                System.out.println("Leitor não encontrado.");
-            }    
-        }
-    }
-    
     public boolean removerLeitor(Leitor leitor) {
         if (leitor == null) {
             System.out.println("Leitor não encontrado.");
@@ -104,20 +90,6 @@ public class Biblioteca {
         }
         for (Livro l : livros) {
             System.out.println(l);
-        }
-    }
-    
-    public void atualizarLivro(int codigo, String titulo, String autor){
-        for (Livro l : livros){
-            if(l != null){
-                if(l.atualizarDados(titulo, autor)){
-                    System.out.println("Dados do livro atualizados");
-                }else{
-                    System.out.println("Não foi possível atualizar os dados.");
-                }    
-            }else{
-                System.out.println("Livro não encontrado.");
-            }    
         }
     }
     

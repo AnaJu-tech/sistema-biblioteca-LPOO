@@ -69,7 +69,14 @@ public class Emprestimo {
 
     public String toString(){
         String livros = "";
-
+        String situacao = "";
+        
+        if(this.aberto == true){
+            situacao = "aberto";
+        }else{
+            situacao = "fechado";
+        }
+        
         for (int i = 0; i < itens.size(); i++){
             livros += itens.get(i).getLivro().getTitulo();
             if(i < itens.size() - 1){
@@ -77,6 +84,6 @@ public class Emprestimo {
             }
         }
         return this.leitor + " - " + this.dataEmprestimo + " - " + 
-                this.aberto + " - " + livros;
+                situacao + " - " + livros;
     }
 }
